@@ -1,3 +1,4 @@
+import org.apache.camel.Exchange;
 import org.apache.camel.RoutesBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
@@ -7,7 +8,7 @@ import java.io.File;
 public class CopyCamelRouteTest extends CamelTestSupport {
 
     @Override
-    protected RoutesBuilder createRouteBuilder() throws Exception {
+    protected RoutesBuilder createRouteBuilder() {
         return new CopyFilesRoute();
     }
 
@@ -24,5 +25,8 @@ public class CopyCamelRouteTest extends CamelTestSupport {
     public void testDirectInput() throws InterruptedException {
         template.sendBody("direct:sampleInput", "this is a directInput");
         Thread.sleep(2000);
+
+        Exchange exchange = consumer.receive("file:target/direct/output/");
+        assertEquals("this is a directInput", exchange.getIn().getBody(String.class));
     }
 }
