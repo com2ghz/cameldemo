@@ -1,5 +1,4 @@
 import org.apache.camel.CamelContext;
-import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.impl.DefaultCamelContext;
 
 public class Main {
@@ -8,14 +7,7 @@ public class Main {
         CamelContext context = new DefaultCamelContext();
 
         try {
-            context.addRoutes(new RouteBuilder() {
-                @Override
-                public void configure() {
-                    from("file:data/input?noop=true")
-                            .to("log:?level=INFO&showBody=true&showHeaders=true")
-                            .to("file:target/data/output/");
-                }
-            });
+            context.addRoutes(new CopyFilesRoute());
 
             context.start();
 

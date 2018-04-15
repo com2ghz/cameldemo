@@ -6,6 +6,6 @@ public class CopyFilesRoute extends RouteBuilder {
         from("file:data/input?noop=true")
                 .from("direct:sampleInput")
                 .to("log:?level=INFO&showBody=true&showHeaders=true")
-                .to("file:data/output/");
+                .to("file:target/data/output/");
     }
 }

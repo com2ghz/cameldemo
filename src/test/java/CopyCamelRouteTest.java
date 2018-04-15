@@ -18,6 +18,11 @@ public class CopyCamelRouteTest extends CamelTestSupport {
 
         assertTrue(output.isDirectory());
         assertEquals(2, output.list().length);
+    }
 
+    @Test
+    public void testDirectInput() throws InterruptedException {
+        template.sendBody("direct:sampleInput", "this is a directInput");
+        Thread.sleep(2000);
     }
 }
